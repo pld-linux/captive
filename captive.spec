@@ -30,9 +30,13 @@ BuildRequires:	readline-devel
 BuildRequires:	ntfsprogs-devel
 BuildRequires:	libgnomeui-devel
 BuildRequires:	libglade2-devel
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/bin/id
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Requires:	lufis
 Provides:	group(captive)
 Provides:	user(captive)
-Requires:	lufis
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -97,7 +101,6 @@ Instalator windowsowych sterowników systemu plików dla captive.
 %patch3 -p1
 
 %build
-rm -f missing
 %{__libtoolize}
 %{__aclocal} -I macros
 %{__autoconf}
@@ -129,20 +132,22 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_docdir}
 mv $RPM_BUILD_ROOT/usr/share/gtk-doc  $RPM_BUILD_ROOT%{_docdir}
 
+%find_lang %{name}
+
 %clean
 #rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid captive`" ]; then
-	if [ "`getgid http`" != "141" ]; then
+if [ -n "`/usr/bin/getgid captive`" ]; then
+	if [ "`/usr/bin/getgid captive`" != "141" ]; then
 		echo "Error: group captive doesn't have gid=141. Correct this before installing captive." 1>&2
 		exit 1
 	fi
 else
 	/usr/sbin/groupadd -g 141 -r -f captive
 fi
-if [ -n "`id -u captive 2>/dev/null`" ]; then
-	if [ "`id -u http`" != "141" ]; then
+if [ -n "`/bin/id -u captive 2>/dev/null`" ]; then
+	if [ "`/bin/id -u captive`" != "141" ]; then
 		echo "Error: user captive doesn't have uid=141. Correct this before installing captive." 1>&2
 		exit 1
 	fi
@@ -150,22 +155,20 @@ else
 	/usr/sbin/useradd -u 141 -r -d /var/lib/captive -s /bin/false -c "Captive User" -g captive captive 1>&2
 fi
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/captive-sandbox-server
 %attr(755,root,root) /sbin/*
 %{_libdir}/lib*
-%{_libdir}/gnome-vfs-2.0/modules/*
-%{_includedir}/captive/*
+%{_includedir}/captive
 %{_mandir}/man1/captive-cmdline.1*
 %{_mandir}/man1/captive-sandbox-server.1*
 %{_mandir}/man7/*
 %{_mandir}/man8/*
 /var/lib/captive
 /etc/w32-mod-id.captivemodid.xml
-%lang(cs) /usr/share/locale/cs/LC_MESSAGES/captive.mo
 %{_gtkdocdir}/captive-apiref
 
 %files -n gnome-vfs2-module-captive
