@@ -8,6 +8,7 @@ Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
 Release:	0.1
+Epoch:		0
 License:	GPL
 Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
@@ -62,6 +63,19 @@ otwartymi ¼ród³ami dla wolnodostêpnych systemów operacyjnych. Wybrano
 wykorzystanie plików oryginalnego sterownika aby osi±gn±æ lepsz±
 kompatybilno¶æ i bezpieczeñstwo.
 
+%package install
+Summary:	Windows filesystem drivers installer for captive
+Summary(pl):	Instalator windowsowych sterowników systemu plików dla captive
+Group:		Base/Utilities
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	ntfsprogs
+
+%description install
+Windows filesystem drivers installer for captive.
+
+%description install -l pl
+Instalator windowsowych sterowników systemu plików dla captive.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -99,7 +113,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+#rm -rf $RPM_BUILD_ROOT
 
 %pre
 if [ -n "`getgid captive`" ]; then
@@ -123,13 +137,17 @@ fi
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS TODO
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) %{_sbindir}/captive-sandbox-server
 %attr(755,root,root) /sbin/*
 %{_libdir}/lib*
 %{_libdir}/gnome-vfs-2.0/modules/*
 %{_includedir}/captive/*
-%{_mandir}/man?/*
+%{_mandir}/man1/captive-cmdline.1*
+%{_mandir}/man1/captive-sandbox-server.1*
+%{_mandir}/man7/*
+%{_mandir}/man8/*
 /var/lib/captive
+/etc/w32-mod-id.captivemodid.xml
 
 
 %{_sysconfdir}/gnome-vfs-2.0/modules/captive.conf
@@ -138,3 +156,8 @@ fi
 
 #/etc/w32-mod-id.captivemodid.xml
 #/usr/share/locale/cs/LC_MESSAGES/captive.mo
+
+%files install
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/captive-install*
+%{_mandir}/man1/captive-install*
