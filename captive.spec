@@ -1,8 +1,6 @@
-
-# TODO: rename spec to captive
-
 #
-## %_bcond_without	gnome	# don't build gnome-vfs support
+# Conditional build:
+#%%bcond_without	gnome	# don't build gnome-vfs support
 %bcond_without	lufs	# don't build LUFS support
 #
 Summary:	Captive - NTFS read/write filesystem for Linux
