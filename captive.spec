@@ -144,10 +144,12 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_docdir}
 mv $RPM_BUILD_ROOT/usr/share/gtk-doc  $RPM_BUILD_ROOT%{_docdir}
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-vfs-2.0/modules/*.la
+
 %find_lang %{name}
 
 %clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %pre
 if [ -n "`/usr/bin/getgid captive`" ]; then
@@ -166,6 +168,9 @@ if [ -n "`/bin/id -u captive 2>/dev/null`" ]; then
 else
 	/usr/sbin/useradd -u 141 -r -d /var/lib/captive -s /bin/false -c "Captive User" -g captive captive 1>&2
 fi
+
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -194,9 +199,8 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/captive/*
-%{_libdir}/libcaptive.so
-%{_libdir}/liblufs-captivefs.so
-%{_libdir}/*.la
-%{_libdir}/gnome-vfs-2.0/modules/*.la
+%attr(755,root,root) %{_libdir}/libcaptive.so
+%attr(755,root,root) %{_libdir}/liblufs-captivefs.so
+%{_libdir}/lib*.la
+%{_includedir}/captive
 %{_gtkdocdir}/captive-apiref
