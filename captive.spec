@@ -28,6 +28,8 @@ BuildRequires:	readline-devel
 BuildRequires:	ntfsprogs-devel
 BuildRequires:	libgnomeui-devel
 BuildRequires:	libglade2-devel
+Provides:	group(captive)
+Provides:	user(captive)
 Requires:	lufis
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -74,7 +76,19 @@ rm -f missing
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure --enable-lufs  --enable-install-pkg
+%configure \
+	--enable-lufs \
+	--enable-install-pkg \
+	--with-readline \
+	--enable-sandbox-setuid=captive \
+	--enable-sandbox-setgid=captive \
+	--enable-sandbox-chroot=/var/lib/captive \
+	--enable-man-pages \
+	--enable-sbin-mountdir=/sbin \
+	--enable-sbin-mount-fs=ntfs:fastfat:cdfs:ext2fsd \
+	--with-orbit-line=link \
+	--with-tmpdir=/tmp \
+	--localstatedir=/var 						
 
 %{__make}
 
@@ -87,15 +101,35 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%pre
+if [ -n "`getgid captive`" ]; then
+	if [ "`getgid http`" != "141" ]; then
+		echo "Error: group captive doesn't have gid=141. Correct this before installing captive." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/groupadd -g 141 -r -f captive
+fi
+if [ -n "`id -u captive 2>/dev/null`" ]; then
+	if [ "`id -u http`" != "141" ]; then
+		echo "Error: user captive doesn't have uid=141. Correct this before installing captive." 1>&2
+		exit 1
+	fi
+else
+	/usr/sbin/useradd -u 141 -r -d /var/lib/captive -s /bin/false -c "Captive User" -g captive captive 1>&2
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
+%attr(755,root,root) /sbin/*
 %{_libdir}/lib*
 %{_libdir}/gnome-vfs-2.0/modules/*
 %{_includedir}/captive/*
 %{_mandir}/man?/*
+/var/lib/captive
 
 
 %{_sysconfdir}/gnome-vfs-2.0/modules/captive.conf
@@ -103,6 +137,4 @@ rm -rf $RPM_BUILD_ROOT
 
 
 #/etc/w32-mod-id.captivemodid.xml
-#/sbin/mount.captive
 #/usr/share/locale/cs/LC_MESSAGES/captive.mo
-#/var/lib/captive/ext2fsd.sys
