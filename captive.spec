@@ -55,6 +55,11 @@ kompatybilno¶æ i bezpieczeñstwo.
 %setup -q
 
 %build
+cp -f /usr/share/automake/config.sub .
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
 %{__make}
 
