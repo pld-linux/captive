@@ -7,7 +7,7 @@ Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
-Release:	0.2
+Release:	0.3
 Epoch:		0
 License:	GPL
 Group:		Base/Kernel
@@ -93,6 +93,18 @@ Windows filesystem drivers installer for captive.
 %description install -l pl
 Instalator windowsowych sterowników systemu plików dla captive.
 
+%package devel
+Summary:	Captive - NTFS read/write filesystem for Linux
+Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
+Group:		Base/Utilities
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description devel
+This package contains header files and development libraries for captive.
+
+%description install -l pl
+Pakiet zawiera pliki nag³ówkowe i biblioteki deweloperskie dla captive.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -161,15 +173,14 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/captive-sandbox-server
 %attr(755,root,root) /sbin/*
-%{_libdir}/lib*
-%{_includedir}/captive
+%attr(755,root,root) %{_libdir}/libcaptive-1.1.5.so
+%attr(755,root,root) %{_libdir}/liblufs-captivefs-1.1.5.so
 %{_mandir}/man1/captive-cmdline.1*
 %{_mandir}/man1/captive-sandbox-server.1*
 %{_mandir}/man7/*
 %{_mandir}/man8/*
 /var/lib/captive
 /etc/w32-mod-id.captivemodid.xml
-%{_gtkdocdir}/captive-apiref
 
 %files -n gnome-vfs2-module-captive
 %defattr(644,root,root,755)
@@ -180,3 +191,12 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/captive-install*
 %{_mandir}/man1/captive-install*
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/captive/*
+%{_libdir}/libcaptive.so
+%{_libdir}/liblufs-captivefs.so
+%{_libdir}/*.la
+%{_libdir}/gnome-vfs-2.0/modules/*.la
+%{_gtkdocdir}/captive-apiref
