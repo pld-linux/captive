@@ -1,4 +1,10 @@
 #
+# TODO:
+#       - fix packages descriptions and groups
+#       - make conditional builds switches working
+#       - correct linking dependencies (now even not gnome connected libs are linked with gnome)
+#       - check provides/requires
+#
 # Conditional build:
 #%%bcond_without	gnome	# don't build gnome-vfs support
 %bcond_without	lufs	# don't build LUFS support
@@ -7,7 +13,7 @@ Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
-Release:	0.3
+Release:	0.4
 Epoch:		0
 License:	GPL
 Group:		Base/Kernel
@@ -97,13 +103,24 @@ Instalator windowsowych sterowników systemu plików dla captive.
 Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Group:		Base/Utilities
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 This package contains header files and development libraries for captive.
 
-%description install -l pl
+%description devel -l pl
 Pakiet zawiera pliki nag³ówkowe i biblioteki deweloperskie dla captive.
+
+%package libs
+Summary:	Captive - NTFS read/write filesystem for Linux
+Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
+Group:		Base/Utilities
+
+%description libs
+This package contains shared libraries for captive.
+
+%description libs -l pl
+Pakiet zawiera biblioteki dzielone dla captive.
 
 %prep
 %setup -q
@@ -169,8 +186,8 @@ else
 	/usr/sbin/useradd -u 141 -r -d /var/lib/captive -s /bin/false -c "Captive User" -g captive captive 1>&2
 fi
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post 	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -204,3 +221,8 @@ fi
 %{_libdir}/lib*.la
 %{_includedir}/captive
 %{_gtkdocdir}/captive-apiref
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libcaptive-1.1.5.so
+%attr(755,root,root) %{_libdir}/liblufs-captivefs-1.1.5.so
