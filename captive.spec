@@ -14,6 +14,8 @@ Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.ta
 # Source0-md5:	dfb7ce617745695e7a908609b9370fd6
 URL:		http://www.jankratochvil.net/project/captive/
 BuildRequires:	ORBit2-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gnome-vfs2-devel >= 2.0
 BuildRequires:	libxml2-devel >= 2.5.9
 %{?with_lufs:BuildRequires:	lufs-devel}
@@ -55,7 +57,6 @@ kompatybilno¶æ i bezpieczeñstwo.
 %setup -q
 
 %build
-cp -f /usr/share/automake/config.sub .
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
