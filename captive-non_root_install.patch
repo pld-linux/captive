@@ -1,0 +1,24 @@
+diff -burN captive-1.1.5.orig/src/client/sandbox-server/Makefile.am captive-1.1.5/src/client/sandbox-server/Makefile.am
+--- captive-1.1.5.orig/src/client/sandbox-server/Makefile.am	2004-09-07 14:07:06.000000000 +0200
++++ captive-1.1.5/src/client/sandbox-server/Makefile.am	2004-09-07 14:09:43.000000000 +0200
+@@ -23,7 +23,7 @@
+ captive_sandbox_server_CFLAGS=$(ORBIT_CFLAGS) $(LINC_CFLAGS)
+ captive_sandbox_server_LDADD =$(ORBIT_LIBS)   $(LINC_LIBS)   $(captive_library) $(INTLLIBS)
+ sbin_PROGRAMS+=captive-sandbox-server
+-sbinPROGRAMS_INSTALL=${INSTALL} -o root -g root -m 4755
++sbinPROGRAMS_INSTALL=${INSTALL}
+ EXTRA_DIST+=.gdbinit
+ 
+ install-data-hook:
+diff -burN captive-1.1.5.orig/src/client/sandbox-server/Makefile.in captive-1.1.5/src/client/sandbox-server/Makefile.in
+--- captive-1.1.5.orig/src/client/sandbox-server/Makefile.in	2004-09-07 14:07:06.000000000 +0200
++++ captive-1.1.5/src/client/sandbox-server/Makefile.in	2004-09-07 14:43:27.369974344 +0200
+@@ -304,7 +304,7 @@
+ 
+ captive_sandbox_server_CFLAGS = $(ORBIT_CFLAGS) $(LINC_CFLAGS)
+ captive_sandbox_server_LDADD = $(ORBIT_LIBS)   $(LINC_LIBS)   $(captive_library) $(INTLLIBS)
+-sbinPROGRAMS_INSTALL = ${INSTALL} -o root -g root -m 4755
++sbinPROGRAMS_INSTALL = ${INSTALL}
+ @ENABLE_MAN_PAGES_TRUE@captive_sandbox_server_man_cond = captive-sandbox-server.1
+ man_MANS = $(captive_sandbox_server_man_cond)
+ subdir = ./src/client/sandbox-server
