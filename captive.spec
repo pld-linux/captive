@@ -13,8 +13,10 @@ Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
 # Source0-md5:	dfb7ce617745695e7a908609b9370fd6
 Patch0:		%{name}-non_root_install.patch
+Patch1:		%{name}-use_lufis.patch
+Patch2:		%{name}-no_lufsd.patch
+Patch3:		%{name}-fix_headers.patch
 URL:		http://www.jankratochvil.net/project/captive/
-BuildRequires:	ORBit2-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gnome-vfs2-devel >= 2.0
@@ -22,7 +24,11 @@ BuildRequires:	libxml2-devel >= 2.5.9
 %{?with_lufs:BuildRequires:	lufs-devel}
 BuildRequires:	openssl-devel
 BuildRequires:	pkgconfig
-Requires:	ntfsprogs >= 1.8.0
+BuildRequires:	readline-devel
+BuildRequires:	ntfsprogs-devel
+BuildRequires:	libgnomeui-devel
+BuildRequires:	libglade2-devel
+Requires:	lufis
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -57,14 +63,19 @@ kompatybilno¶æ i bezpieczeñstwo.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-#%{__libtoolize}
-#%{__aclocal}
-#%{__autoconf}
-#%{__autoheader}
-#%{__automake}
-%configure
+rm -f missing
+%{__libtoolize}
+%{__aclocal} -I macros
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure --enable-lufs  --enable-install-pkg
+
 %{__make}
 
 %install
@@ -85,3 +96,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gnome-vfs-2.0/modules/*
 %{_includedir}/captive/*
 %{_mandir}/man?/*
+
+
+%{_sysconfdir}/gnome-vfs-2.0/modules/captive.conf
+#%%attr(755,root,root) %{_libdir}/gnome-vfs-2.0/modules/libntfs-gnomevfs.so*
+
+
+#/etc/w32-mod-id.captivemodid.xml
+#/sbin/mount.captive
+#/usr/share/locale/cs/LC_MESSAGES/captive.mo
+#/var/lib/captive/ext2fsd.sys
