@@ -13,7 +13,7 @@ Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
-Release:	0.4
+Release:	0.5
 Epoch:		0
 License:	GPL
 Group:		Base/Kernel
@@ -22,7 +22,6 @@ Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.ta
 Patch0:		%{name}-non_root_install.patch
 Patch1:		%{name}-use_lufis.patch
 Patch2:		%{name}-no_lufsd.patch
-Patch3:		%{name}-fix_headers.patch
 URL:		http://www.jankratochvil.net/project/captive/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -128,7 +127,9 @@ Pakiet zawiera biblioteki dzielone dla captive.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+
+cd src/libcaptive/sandbox
+orbit-idl-2 sandbox.idl
 
 %build
 %{__libtoolize}
