@@ -12,6 +12,7 @@ License:	GPL
 Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
 # Source0-md5:	dfb7ce617745695e7a908609b9370fd6
+Patch0:		%{name}-non_root_install.patch
 URL:		http://www.jankratochvil.net/project/captive/
 BuildRequires:	ORBit2-devel
 BuildRequires:	autoconf
@@ -55,12 +56,14 @@ kompatybilno¶æ i bezpieczeñstwo.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
+#%{__libtoolize}
+#%{__aclocal}
+#%{__autoconf}
+#%{__autoheader}
+#%{__automake}
 %configure
 %{__make}
 
@@ -76,3 +79,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS TODO
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_sbindir}/*
+%{_libdir}/lib*
+%{_libdir}/gnome-vfs-2.0/modules/*
+%{_includedir}/captive/*
+%{_mandir}/man?/*
