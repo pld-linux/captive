@@ -7,7 +7,7 @@ Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
-Release:	0.1
+Release:	0.2
 Epoch:		0
 License:	GPL
 Group:		Base/Kernel
@@ -21,6 +21,7 @@ URL:		http://www.jankratochvil.net/project/captive/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gnome-vfs2-devel >= 2.0
+BuildRequires:	gtk-doc
 BuildRequires:	libxml2-devel >= 2.5.9
 %{?with_lufs:BuildRequires:	lufs-devel}
 BuildRequires:	openssl-devel
@@ -63,6 +64,18 @@ otwartymi ¼ród³ami dla wolnodostêpnych systemów operacyjnych. Wybrano
 wykorzystanie plików oryginalnego sterownika aby osi±gn±æ lepsz±
 kompatybilno¶æ i bezpieczeñstwo.
 
+%package -n gnome-vfs2-module-captive
+Summary:	Captive module for gnome-vfs
+Summary(pl):	Modu³ captive dla gnome-vfs
+Group:		Libraries
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description -n gnome-vfs2-module-captive
+Captive module for gnome-vfs.
+
+%description -n gnome-vfs2-module-captive -l pl
+Modu³ captive dla gnome-vfs.
+
 %package install
 Summary:	Windows filesystem drivers installer for captive
 Summary(pl):	Instalator windowsowych sterowników systemu plików dla captive
@@ -102,7 +115,8 @@ rm -f missing
 	--enable-sbin-mount-fs=ntfs:fastfat:cdfs:ext2fsd \
 	--with-orbit-line=link \
 	--with-tmpdir=/tmp \
-	--localstatedir=/var 						
+	--localstatedir=/var \
+	--enable-gtk-doc
 
 %{__make}
 
@@ -111,6 +125,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install -d $RPM_BUILD_ROOT%{_docdir}
+mv $RPM_BUILD_ROOT/usr/share/gtk-doc  $RPM_BUILD_ROOT%{_docdir}
 
 %clean
 #rm -rf $RPM_BUILD_ROOT
@@ -148,14 +165,13 @@ fi
 %{_mandir}/man8/*
 /var/lib/captive
 /etc/w32-mod-id.captivemodid.xml
+%lang(cs) /usr/share/locale/cs/LC_MESSAGES/captive.mo
+%{_gtkdocdir}/captive-apiref
 
-
+%files -n gnome-vfs2-module-captive
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs*.so
 %{_sysconfdir}/gnome-vfs-2.0/modules/captive.conf
-#%%attr(755,root,root) %{_libdir}/gnome-vfs-2.0/modules/libntfs-gnomevfs.so*
-
-
-#/etc/w32-mod-id.captivemodid.xml
-#/usr/share/locale/cs/LC_MESSAGES/captive.mo
 
 %files install
 %defattr(644,root,root,755)
