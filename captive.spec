@@ -40,6 +40,7 @@ Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	lufis
 Provides:	group(captive)
 Provides:	user(captive)
@@ -195,8 +196,6 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/captive-sandbox-server
 %attr(755,root,root) /sbin/*
-%attr(755,root,root) %{_libdir}/libcaptive-1.1.5.so
-%attr(755,root,root) %{_libdir}/liblufs-captivefs-1.1.5.so
 %{_mandir}/man1/captive-cmdline.1*
 %{_mandir}/man1/captive-sandbox-server.1*
 %{_mandir}/man7/*
