@@ -1,0 +1,28 @@
+--- captive-1.1.5/configure.in.orig	2005-01-08 15:50:21.815164344 +0100
++++ captive-1.1.5/configure.in	2005-01-08 15:52:20.391138056 +0100
+@@ -329,24 +329,8 @@
+ 			AC_MSG_WARN([LUFS client not being compiled as no LUFS include files were found. Install 'lufs-*-*captive*' package.])
+ 		fi
+ 	fi
+-	AC_CHECK_TYPES([struct lufs_sbattr],,[
+-		dnl FIXME: Include 'lufs' version when 'lufs_sbattr' gets integrated:
+-		if $have_lufs_includes && test x$enable_lufs = xyes;then
+-			AC_MSG_ERROR([Although LUFS include files were found they are too old. You may also use --enable-lufs=auto.])
+-		else
+-			AC_MSG_WARN([Although LUFS include files were found they are too old. df(1) will not show available NTFS disk space.])
+-		fi
+-		],[#include <lufs/proto.h>])
+-	AC_PATH_PROGS(PATH_LUFSD,lufsd)
+-	if test x$PATH_LUFSD = x;then
+-		if test x$enable_lufs = xyes;then
+-			AC_MSG_ERROR([LUFS client was requested (--enable-lufs) but no lufsd(1) binary was found. Install 'lufs-*-*captive*' package.])
+-		else
+-			AC_MSG_WARN([LUFS client not being compiled as no lufsd(1) binary was found. Install 'lufs-*-*captive*' package.])
+-		fi
+-	fi
+ fi
+-AM_CONDITIONAL(ENABLE_LUFS,[ $have_lufs_includes && test x$PATH_LUFSD != x -a x$enable_lufs != no ])
++AM_CONDITIONAL(ENABLE_LUFS,[ $have_lufs_includes && test x$enable_lufs != no ])
+ AC_SUBST(PATH_LUFSD)
+ 
+ dnl for $(top_srcdir)/src/libcaptive/client/
