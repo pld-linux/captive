@@ -1,47 +1,74 @@
 
+# TODO: rename spec to captive
+
 #
 ## %_bcond_without	gnome	# don't build gnome-vfs support
-## %_bcond_without lufs	# don't build LUFS support
-
-Summary:	Captive NTFS
-Summary(pl):	Captive NTFS
+%bcond_without	lufs	# don't build LUFS support
+#
+Summary:	Captive - NTFS read/write filesystem for Linux
+Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
-Release:	0
+Release:	0.1
 License:	GPL
 Group:		Base/Kernel
-Source0:	http://www.jankratochvil.net/project/%{name}/dist/%{name}-%{version}.tar.gz
+Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
 # Source0-md5:	dfb7ce617745695e7a908609b9370fd6
-BuildRequires:	gnome-vfs
+URL:		http://www.jankratochvil.net/project/captive/
+BuildRequires:	ORBit2-devel
+BuildRequires:	gnome-vfs2-devel >= 2.0
+BuildRequires:	libxml2-devel >= 2.5.9
+%{?with_lufs:BuildRequires:	lufs-devel}
+BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig
 Requires:	ntfsprogs >= 1.8.0
-URL:		http://www.jankratochvil.net/project/%{name}
-Buildroot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-- -- empty --
+Captive project implements the first full read/write free access to
+NTFS disk drives. You can mount your Microsoft Windows NT, 200x or XP
+partition as a transparently accessible volume for your GNU/Linux.
+
+This compatibility was achieved in the Wine way by using the original
+Microsoft Windows ntfs.sys driver. It emulates the required subsystems
+of the Microsoft Windows kernel by reusing one of the original
+ntoskrnl.exe, ReactOS parts, or this project's own reimplementations,
+on a case by case basis. Project includes the first open source
+MS-Windows kernel API for Free operating systems. Involvement of the
+original driver files was chosen to achieve the best and unprecedented
+filesystem compatibility and safety.
 
 %description -l pl
-- -- pusty --
+Projekt Captive implementuje pierwszy pe³ny, swobodny dostêp z
+odczytem i zapisem do partycji NTFS. Pozwala zamontowaæ partycje z
+Microsoft Windows NT, 200x i XP jako dostêpny w sposób przezroczysty
+wolumen pod Linuksem.
+
+Kompatybilno¶æ osi±gniêto metod± Wine poprzez u¿ycie oryginalnego
+sterownika ntfs.sys. Captive emuluje wymagane podsystemy j±dra
+Microsoft Windows poprzez wykorzystanie oryginalnego ntoskrnl.exe,
+czê¶ci ReactOS-a lub w³asne implementacje z tego projektu w zale¿no¶ci
+od danego przypadku. Projekt zawiera pierwsze API j±dra MS-Windows z
+otwartymi ¼ród³ami dla wolnodostêpnych systemów operacyjnych. Wybrano
+wykorzystanie plików oryginalnego sterownika aby osi±gn±æ lepsz±
+kompatybilno¶æ i bezpieczeñstwo.
 
 %prep
-%setup -q -n %{name}-%{version}
-
-#%patch
+%setup -q
 
 %build
-./configure --prefix=%{_prefix}
-%{__make} RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
+%configure
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} prefix=$RPM_BUILD_ROOT%{_prefix} install
 
-%post
-%postun
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc
+%doc AUTHORS NEWS README THANKS TODO
