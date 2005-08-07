@@ -13,6 +13,7 @@ Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
 # Source0-md5:	dfb7ce617745695e7a908609b9370fd6
 Patch0:		%{name}-non_root_install.patch
+Patch1:		%{name}-popt_link.patch
 URL:		http://www.jankratochvil.net/project/captive/
 BuildRequires:	ORBit2-devel
 BuildRequires:	autoconf
@@ -57,14 +58,30 @@ kompatybilno¶æ i bezpieczeñstwo.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 #%{__libtoolize}
-#%{__aclocal}
+#%{__aclocal} -I macros
 #%{__autoconf}
 #%{__autoheader}
 #%{__automake}
-%configure
+%configure \
+	--enable-shared \
+	--disable-static \
+	--with-readline \
+	--disable-bug-replay \
+	--enable-lufs=auto \
+	--disable-install-pkg \
+	--enable-sandbox-setuid=captive \
+	--enable-sandbox-setgid=captive \
+	--enable-sandbox-chroot=/var/lib/captive \
+	--enable-man-pages \
+	--enable-sbin-mountdir=/sbin \
+	--enable-sbin-mount-fs=ntfs:fastfat:cdfs:ext2fsd \
+	--with-oribt-line=link \
+	--with-tmpdir=/tmp
+
 %{__make}
 
 %install
@@ -73,15 +90,20 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS TODO
+%attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
+%{_sysconfdir}/gnome-vfs-2.0/modules/*
 %{_libdir}/lib*
 %{_libdir}/gnome-vfs-2.0/modules/*
 %{_includedir}/captive/*
 %{_mandir}/man?/*
+%{_var}/lib/captive/
