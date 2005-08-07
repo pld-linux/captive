@@ -1,0 +1,24 @@
+diff -burN captive-1.1.5.orig/src/client/cmdline/Makefile.in captive-1.1.5/src/client/cmdline/Makefile.in
+--- captive-1.1.5.orig/src/client/cmdline/Makefile.in	2005-08-07 20:25:25.000000000 +0000
++++ captive-1.1.5/src/client/cmdline/Makefile.in	2005-08-07 21:30:33.000000000 +0000
+@@ -346,7 +346,7 @@
+ 		utf8.h
+ 
+ captive_cmdline_CFLAGS = $(GNOME_VFS_CFLAGS)
+-captive_cmdline_LDADD = $(captive_library) $(GNOME_VFS_LIBS)   $(READLINE_LIBS) $(INTLLIBS)
++captive_cmdline_LDADD = $(captive_library) $(GNOME_VFS_LIBS)   $(READLINE_LIBS) $(INTLLIBS) $(POPT_LIBS)
+ captive_cmdline_LDFLAGS = $(READLINE_LDFLAGS)
+ @ENABLE_MAN_PAGES_TRUE@captive_cmdline_man_cond = captive-cmdline.1
+ man_MANS = $(captive_cmdline_man_cond)
+diff -burN captive-1.1.5.orig/src/client/sandbox-server/Makefile.in captive-1.1.5/src/client/sandbox-server/Makefile.in
+--- captive-1.1.5.orig/src/client/sandbox-server/Makefile.in	2005-08-07 20:25:25.000000000 +0000
++++ captive-1.1.5/src/client/sandbox-server/Makefile.in	2005-08-07 21:31:14.000000000 +0000
+@@ -303,7 +303,7 @@
+ 		main.c
+ 
+ captive_sandbox_server_CFLAGS = $(ORBIT_CFLAGS) $(LINC_CFLAGS)
+-captive_sandbox_server_LDADD = $(ORBIT_LIBS)   $(LINC_LIBS)   $(captive_library) $(INTLLIBS)
++captive_sandbox_server_LDADD = $(ORBIT_LIBS)   $(LINC_LIBS)   $(captive_library) $(INTLLIBS) $(POPT_LIBS)
+ sbinPROGRAMS_INSTALL = ${INSTALL}
+ @ENABLE_MAN_PAGES_TRUE@captive_sandbox_server_man_cond = captive-sandbox-server.1
+ man_MANS = $(captive_sandbox_server_man_cond)
