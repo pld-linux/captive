@@ -17,11 +17,14 @@ URL:		http://www.jankratochvil.net/project/captive/
 BuildRequires:	ORBit2-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	gettext-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0
 BuildRequires:	libxml2-devel >= 2.5.9
 %{?with_lufs:BuildRequires:	lufs-devel}
 BuildRequires:	openssl-devel
+BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
+BuildRequires:	readline-devel
 Requires:	ntfsprogs >= 1.8.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
