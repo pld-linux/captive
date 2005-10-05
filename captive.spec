@@ -55,12 +55,16 @@ wykorzystanie plików oryginalnego sterownika aby osi±gn±æ lepsz±
 kompatybilno¶æ i bezpieczeñstwo.
 
 %package devel
-Summary:	Development libraries and header files for captive library
+Summary:	Header files for captive library
+Summary(pl):	Pliki nag³ówkowe biblioteki captive
 Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
-This is the package containing the development libraries and header
-files for captive.
+This is the package containing the header files for captive.
+
+%description devel -l pl
+Ten pakiet zawiera pliki nag³ówkowe biblioteki captive.
 
 %prep
 %setup -q
@@ -68,11 +72,6 @@ files for captive.
 %patch1 -p1
 
 %build
-#%{__libtoolize}
-#%{__aclocal} -I macros
-#%{__autoconf}
-#%{__autoheader}
-#%{__automake}
 %configure \
 	--enable-shared \
 	--disable-static \
@@ -97,6 +96,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.la
+
 %find_lang %{name}
 
 %clean
@@ -110,14 +111,13 @@ rm -rf $RPM_BUILD_ROOT
 #%attr(755,root,root) %{_bindir}/captive-bug-replay was here earlier.
 %attr(755,root,root) %{_sbindir}/captive-sandbox-server
 %{_sysconfdir}/gnome-vfs-2.0/modules/*
-%{_libdir}/libcaptive-*.so
-%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs-*.so
+%attr(755,root,root) %{_libdir}/libcaptive-*.so
+%attr(755,root,root) %{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs*.so
 %{_mandir}/man?/*
 %{_var}/lib/captive
 
 %files devel
-%{_includedir}/captive
-%{_libdir}/libcaptive.so
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libcaptive.so
 %{_libdir}/libcaptive.la
-%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.so
-%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.la
+%{_includedir}/captive
