@@ -1,13 +1,12 @@
 #
 # Conditional build:
-#%%bcond_without	gnome	# don't build gnome-vfs support
 %bcond_without	lufs	# don't build LUFS support
 #
 Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
-Release:	0.1
+Release:	0.5
 License:	GPL
 Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
@@ -55,6 +54,14 @@ otwartymi ¼ród³ami dla wolnodostêpnych systemów operacyjnych. Wybrano
 wykorzystanie plików oryginalnego sterownika aby osi±gn±æ lepsz±
 kompatybilno¶æ i bezpieczeñstwo.
 
+%package devel
+Summary:	Development libraries and header files for captive library
+Group:		Development/Libraries
+
+%description devel
+This is the package containing the development libraries and header
+files for captive.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -98,12 +105,19 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS TODO
-%attr(755,root,root) /sbin/*
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_sbindir}/*
+#%attr(755,root,root) /sbin/* # what was installed here?
+%attr(755,root,root) %{_bindir}/captive-cmdline
+#%attr(755,root,root) %{_bindir}/captive-bug-replay was here earlier.
+%attr(755,root,root) %{_sbindir}/captive-sandbox-server
 %{_sysconfdir}/gnome-vfs-2.0/modules/*
-%{_libdir}/lib*
-%{_libdir}/gnome-vfs-2.0/modules/*
-%{_includedir}/captive/*
+%{_libdir}/libcaptive-*.so
+%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs-*.so
 %{_mandir}/man?/*
-%{_var}/lib/captive/
+%{_var}/lib/captive
+
+%files devel
+%{_includedir}/captive
+%{_libdir}/libcaptive.so
+%{_libdir}/libcaptive.la
+%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.so
+%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.la
