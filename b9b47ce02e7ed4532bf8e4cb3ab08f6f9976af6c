@@ -1,0 +1,4 @@
+- added non_root_install patch
+- disable autothingies
+- more files in %files
+- builds, doesn't work
