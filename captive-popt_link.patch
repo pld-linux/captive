@@ -1,24 +1,33 @@
-diff -burN captive-1.1.5.orig/src/client/cmdline/Makefile.in captive-1.1.5/src/client/cmdline/Makefile.in
---- captive-1.1.5.orig/src/client/cmdline/Makefile.in	2005-08-07 20:25:25.000000000 +0000
-+++ captive-1.1.5/src/client/cmdline/Makefile.in	2005-08-07 21:30:33.000000000 +0000
-@@ -346,7 +346,7 @@
+--- captive-1.1.6.1/src/client/cmdline/Makefile.am.orig	2006-01-25 19:06:11.657593000 +0100
++++ captive-1.1.6.1/src/client/cmdline/Makefile.am	2006-01-25 19:06:30.497593000 +0100
+@@ -64,7 +64,7 @@
+ 		utf8.c \
  		utf8.h
+ captive_cmdline_CFLAGS=                   $(GNOME_VFS_CFLAGS) $(LIBXML_CFLAGS) 
+-captive_cmdline_LDADD =$(captive_library) $(GNOME_VFS_LIBS)   $(LIBXML_LIBS)   $(READLINE_LIBS) $(INTLLIBS)
++captive_cmdline_LDADD =$(captive_library) $(GNOME_VFS_LIBS)   $(LIBXML_LIBS)   $(READLINE_LIBS) $(INTLLIBS) $(POPT_LIBS)
+ captive_cmdline_LDFLAGS=$(READLINE_LDFLAGS)
+ bin_PROGRAMS+=captive-cmdline
  
- captive_cmdline_CFLAGS = $(GNOME_VFS_CFLAGS)
--captive_cmdline_LDADD = $(captive_library) $(GNOME_VFS_LIBS)   $(READLINE_LIBS) $(INTLLIBS)
-+captive_cmdline_LDADD = $(captive_library) $(GNOME_VFS_LIBS)   $(READLINE_LIBS) $(INTLLIBS) $(POPT_LIBS)
- captive_cmdline_LDFLAGS = $(READLINE_LDFLAGS)
- @ENABLE_MAN_PAGES_TRUE@captive_cmdline_man_cond = captive-cmdline.1
- man_MANS = $(captive_cmdline_man_cond)
-diff -burN captive-1.1.5.orig/src/client/sandbox-server/Makefile.in captive-1.1.5/src/client/sandbox-server/Makefile.in
---- captive-1.1.5.orig/src/client/sandbox-server/Makefile.in	2005-08-07 20:25:25.000000000 +0000
-+++ captive-1.1.5/src/client/sandbox-server/Makefile.in	2005-08-07 21:31:14.000000000 +0000
-@@ -303,7 +303,7 @@
+--- captive-1.1.6.1/src/client/sandbox-server/Makefile.am.orig	2006-01-25 19:06:58.687593000 +0100
++++ captive-1.1.6.1/src/client/sandbox-server/Makefile.am	2006-01-25 19:07:08.547593000 +0100
+@@ -21,7 +21,7 @@
+ captive_sandbox_server_SOURCES= \
  		main.c
+ captive_sandbox_server_CFLAGS=$(ORBIT_CFLAGS) $(LINC_CFLAGS) $(GNOME_VFS_CFLAGS) $(LIBXML_CFLAGS) 
+-captive_sandbox_server_LDADD =$(ORBIT_LIBS)   $(LINC_LIBS)   $(GNOME_VFS_LIBS)   $(LIBXML_LIBS)   $(captive_library) $(INTLLIBS)
++captive_sandbox_server_LDADD =$(ORBIT_LIBS)   $(LINC_LIBS)   $(GNOME_VFS_LIBS)   $(LIBXML_LIBS)   $(captive_library) $(INTLLIBS) $(POPT_LIBS)
+ libexec_PROGRAMS=captive-sandbox-server
+ libexecPROGRAMS_INSTALL=${INSTALL}
+ EXTRA_DIST+=.gdbinit
+--- captive-1.1.6.1/src/client/fuse/Makefile.am.orig	2006-01-26 12:16:41.567593000 +0100
++++ captive-1.1.6.1/src/client/fuse/Makefile.am	2006-01-26 12:16:58.597593000 +0100
+@@ -65,7 +65,7 @@
+ 		main.c \
+ 		main.h
+ mount_captive_CFLAGS=                   $(GNOME_VFS_CFLAGS) $(LIBXML_CFLAGS) $(FUSE_CFLAGS)
+-mount_captive_LDADD =$(captive_library) $(GNOME_VFS_LIBS)   $(LIBXML_LIBS)   $(FUSE_LIBS)   $(INTLLIBS)
++mount_captive_LDADD =$(captive_library) $(GNOME_VFS_LIBS)   $(LIBXML_LIBS)   $(FUSE_LIBS)   $(INTLLIBS) $(POPT_LIBS)
+ mount_captive_LDFLAGS=$(READLINE_LDFLAGS)
  
- captive_sandbox_server_CFLAGS = $(ORBIT_CFLAGS) $(LINC_CFLAGS)
--captive_sandbox_server_LDADD = $(ORBIT_LIBS)   $(LINC_LIBS)   $(captive_library) $(INTLLIBS)
-+captive_sandbox_server_LDADD = $(ORBIT_LIBS)   $(LINC_LIBS)   $(captive_library) $(INTLLIBS) $(POPT_LIBS)
- sbinPROGRAMS_INSTALL = ${INSTALL}
- @ENABLE_MAN_PAGES_TRUE@captive_sandbox_server_man_cond = captive-sandbox-server.1
- man_MANS = $(captive_sandbox_server_man_cond)
+ mount_captive_CFLAGS+=-DLIBEXECDIR="$(libexecdir)"
