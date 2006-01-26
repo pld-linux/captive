@@ -1,0 +1,10 @@
+--- captive-1.1.6.1/configure.ac.orig	2006-01-25 18:12:51.367593000 +0100
++++ captive-1.1.6.1/configure.ac	2006-01-25 18:13:45.117593000 +0100
+@@ -438,6 +438,7 @@
+ AC_SUBST(LIBNTFS_GNOMEVFS_LIBS)
+ 
+ # AC_ARG_ENABLE(install-pkg,[--enable-install-pkg=[no/yes/auto]],,enable_install_pkg=auto)
++have_gnome=false
+ GLADE_W_INIT([
+ 	./src/install/acquire/ui-gnome-interface.c
+ 	./src/install/acquire/ui-gnome-interface.h
