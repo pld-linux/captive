@@ -4,7 +4,7 @@ Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.6.1
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
@@ -24,6 +24,14 @@ BuildRequires:	openssl-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
+Provides:	group(captive)
+Provides:	user(captive)
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
 Requires:	ntfsprogs >= 1.8.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -115,6 +123,16 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.la
 
 %clean
 #rm -rf $RPM_BUILD_ROOT
+
+%pre
+%groupadd -g 141 captive
+%useradd -u 141 -r -d /var/lib/captive -s /bin/false -c "Captive User" -g captive captive
+
+%postun 
+if [ "$1" = "0" ]; then
+	%userremove captive
+	%groupremove captive
+fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
