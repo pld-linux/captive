@@ -1,18 +1,17 @@
 #
-# Conditional build:
-%bcond_without	lufs	# don't build LUFS support
 #
 Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
-Version:	1.1.5
-Release:	0.5
+Version:	1.1.6.1
+Release:	0.1
 License:	GPL
 Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
-# Source0-md5:	dfb7ce617745695e7a908609b9370fd6
+# Source0-md5:	81fcc21997cf46ad9440d1a1464a384e
 Patch0:		%{name}-non_root_install.patch
 Patch1:		%{name}-popt_link.patch
+Patch2:		%{name}-configure_ac.patch
 URL:		http://www.jankratochvil.net/project/captive/
 BuildRequires:	ORBit2-devel
 BuildRequires:	autoconf
@@ -20,7 +19,7 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0
 BuildRequires:	libxml2-devel >= 2.5.9
-%{?with_lufs:BuildRequires:	lufs-devel}
+BuildRequires:	libfuse-devel >= 2.4.1
 BuildRequires:	openssl-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
@@ -73,14 +72,25 @@ Ten pakiet zawiera pliki nag³ówkowe biblioteki captive.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+# Fix not finished moving captive-sandbox-server to libdir
+sed -i -e 's/--sandbox-server=@sbindir@/--sandbox-server=@libdir@/g' src/client/gnomevfs/captive.conf.in
 
 %build
+%{__libtoolize}
+%{__aclocal} -I macros
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+cp -f /usr/share/automake/config.sub .
+
 %configure \
 	--enable-shared \
 	--disable-static \
 	--with-readline \
 	--disable-bug-replay \
-	--enable-lufs=auto \
+	--enable-lufs=no \
+	--enable-fuse=yes \
 	--disable-install-pkg \
 	--enable-sandbox-setuid=captive \
 	--enable-sandbox-setgid=captive \
@@ -104,16 +114,17 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.la
 %find_lang %{name}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+#rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README THANKS TODO
-#%attr(755,root,root) /sbin/* # what was installed here?
+%attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_bindir}/captive-cmdline
 #%attr(755,root,root) %{_bindir}/captive-bug-replay was here earlier.
-%attr(755,root,root) %{_sbindir}/captive-sandbox-server
+%%attr(755,root,root) %{_libdir}/captive-sandbox-server
 %{_sysconfdir}/gnome-vfs-2.0/modules/*
+%{_sysconfdir}/w32-mod-id.captivemodid.xml
 %attr(755,root,root) %{_libdir}/libcaptive-*.so
 %attr(755,root,root) %{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs*.so
 %{_mandir}/man?/*
