@@ -24,6 +24,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
+BuildRequires:	rpmbuild(macros) >= 1.202
 Provides:	group(captive)
 Provides:	user(captive)
 Requires(postun):	/usr/sbin/groupdel
