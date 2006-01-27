@@ -24,6 +24,7 @@ BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.202
+BuildRequires:	sed >= 4.0
 Provides:	group(captive)
 Provides:	user(captive)
 Requires(postun):	/usr/sbin/groupdel
