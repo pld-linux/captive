@@ -1,5 +1,3 @@
-#
-#
 Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
@@ -18,8 +16,9 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-vfs2-devel >= 2.0
-BuildRequires:	libxml2-devel >= 2.5.9
 BuildRequires:	libfuse-devel >= 2.4.1
+BuildRequires:	libtool
+BuildRequires:	libxml2-devel >= 2.5.9
 BuildRequires:	openssl-devel
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
@@ -91,8 +90,6 @@ sed -i -e 's/--sandbox-server=@sbindir@/--sandbox-server=@libdir@/g' src/client/
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-cp -f /usr/share/automake/config.sub .
-
 %configure \
 	--enable-shared \
 	--disable-static \
@@ -123,7 +120,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs.la
 %find_lang %{name}
 
 %clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %pre
 %groupadd -g 141 captive
