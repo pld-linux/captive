@@ -83,17 +83,17 @@ This is the package containing the header files for captive.
 Ten pakiet zawiera pliki nag³ówkowe biblioteki captive.
 
 %package gnome
-Summary:	Gnome vfs data for captive support
-Summary(pl):	Dane dla Gnome vfs z obs³ug± captive
+Summary:	Gnome VFS module for captive support
+Summary(pl):	Modu³ Gnome VFS z obs³ug± captive
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gnome-vfs2 >= 2.0
 
 %description gnome
-Gnome vfs data for captive support.
+Gnome VFS module for captive support.
 
 %description gnome -l pl
-Dane dla Gnome vfs z obs³ug± captive.
+Modu³ Gnome VFS z obs³ug± captive.
 
 %prep
 %setup -q
@@ -122,7 +122,7 @@ sed -i -e 's/--sandbox-server=@sbindir@/--sandbox-server=@libdir@/g' src/client/
 	--enable-man-pages \
 	--enable-sbin-mountdir=/sbin \
 	--enable-sbin-mount-fs=ntfs:fastfat:cdfs:ext2fsd \
-	--with-oribt-line=link} \
+	--with-oribt-line=link \
 	--with-tmpdir=/tmp
 
 %{__make}
