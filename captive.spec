@@ -122,7 +122,7 @@ sed -i -e 's/--sandbox-server=@sbindir@/--sandbox-server=@libdir@/g' src/client/
 	--enable-man-pages \
 	--enable-sbin-mountdir=/sbin \
 	--enable-sbin-mount-fs=ntfs:fastfat:cdfs:ext2fsd \
-	--with-oribt-line=link \
+	--with-orbit-line=link \
 	--with-tmpdir=/tmp
 
 %{__make}
