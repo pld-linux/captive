@@ -1,21 +1,25 @@
+# http://gentoo-wiki.com/HOWTO_NTFS_write_with_Captive_approach
+# nice article about how to use it in gentoo, should be easy to prot to pld
+
+# please allow those bconds to remain here as next version might be gnome-vfs2 independent
+# %bcond_without	vfs	# enable gnome2 cvs
 Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
-Version:	1.1.6.1
+Version:	1.1.7
 Release:	1
 License:	GPL
 Group:		Base/Kernel
 Source0:	http://www.jankratochvil.net/project/captive/dist/%{name}-%{version}.tar.gz
-# Source0-md5:	81fcc21997cf46ad9440d1a1464a384e
-Patch0:		%{name}-non_root_install.patch
-Patch1:		%{name}-popt_link.patch
-Patch2:		%{name}-configure_ac.patch
+# Source0-md5:	34312cd854ca992f0daf0a8faabaae9a
+Patch0:		%{name}-popt_link.patch
 URL:		http://www.jankratochvil.net/project/captive/
-BuildRequires:	ORBit2-devel
+#%if %{with vfs}
+BuildRequires:	gnome-vfs2-devel >= 2.0
+#%endif
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
-BuildRequires:	gnome-vfs2-devel >= 2.0
 BuildRequires:	libfuse-devel >= 2.4.1
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 2.5.9
@@ -24,6 +28,7 @@ BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(macros) >= 1.202
+BuildRequires:	ORBit2-devel
 BuildRequires:	sed >= 4.0
 Provides:	group(captive)
 Provides:	user(captive)
@@ -77,11 +82,23 @@ This is the package containing the header files for captive.
 %description devel -l pl
 Ten pakiet zawiera pliki nag³ówkowe biblioteki captive.
 
+%package gnome
+Summary:	Gnome vfs data for captive support
+Summary(pl):	Dane dla Gnome vfs z obs³ug± captive
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	gnome-vfs2 >= 2.0
+
+%description gnome
+Gnome vfs data for captive support.
+
+%description gnome -l pl
+Dane dla Gnome vfs z obs³ug± captive.
+
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
+
 # Fix not finished moving captive-sandbox-server to libdir
 sed -i -e 's/--sandbox-server=@sbindir@/--sandbox-server=@libdir@/g' src/client/gnomevfs/captive.conf.in
 
@@ -105,7 +122,7 @@ sed -i -e 's/--sandbox-server=@sbindir@/--sandbox-server=@libdir@/g' src/client/
 	--enable-man-pages \
 	--enable-sbin-mountdir=/sbin \
 	--enable-sbin-mount-fs=ntfs:fastfat:cdfs:ext2fsd \
-	--with-oribt-line=link \
+	--with-oribt-line=link} \
 	--with-tmpdir=/tmp
 
 %{__make}
@@ -139,11 +156,9 @@ fi
 %attr(755,root,root) /sbin/*
 %attr(755,root,root) %{_bindir}/captive-cmdline
 #%attr(755,root,root) %{_bindir}/captive-bug-replay was here earlier.
-%%attr(755,root,root) %{_libdir}/captive-sandbox-server
-%{_sysconfdir}/gnome-vfs-2.0/modules/*
+%attr(755,root,root) %{_libdir}/captive-sandbox-server
 %{_sysconfdir}/w32-mod-id.captivemodid.xml
 %attr(755,root,root) %{_libdir}/libcaptive-*.so
-%attr(755,root,root) %{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs*.so
 %{_mandir}/man?/*
 %{_var}/lib/captive
 
@@ -152,3 +167,10 @@ fi
 %attr(755,root,root) %{_libdir}/libcaptive.so
 %{_libdir}/libcaptive.la
 %{_includedir}/captive
+
+#%if %{with vfs}
+%files gnome
+%defattr(644,root,root,755)
+%{_sysconfdir}/gnome-vfs-2.0/modules/*
+%attr(755,root,root) %{_libdir}/gnome-vfs-2.0/modules/libcaptive-gnomevfs*.so
+#%endif
