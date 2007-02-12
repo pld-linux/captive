@@ -10,7 +10,7 @@
 %bcond_without	lufs	# don't build LUFS support
 #
 Summary:	Captive - NTFS read/write filesystem for Linux
-Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
+Summary(pl.UTF-8):   Captive - obsÅ‚uga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.5
 Release:	0.5
@@ -59,36 +59,36 @@ MS-Windows kernel API for Free operating systems. Involvement of the
 original driver files was chosen to achieve the best and unprecedented
 filesystem compatibility and safety.
 
-%description -l pl
-Projekt Captive implementuje pierwszy pe³ny, swobodny dostêp z
-odczytem i zapisem do partycji NTFS. Pozwala zamontowaæ partycje z
-Microsoft Windows NT, 200x i XP jako dostêpny w sposób przezroczysty
+%description -l pl.UTF-8
+Projekt Captive implementuje pierwszy peÅ‚ny, swobodny dostÄ™p z
+odczytem i zapisem do partycji NTFS. Pozwala zamontowaÄ‡ partycje z
+Microsoft Windows NT, 200x i XP jako dostÄ™pny w sposÃ³b przezroczysty
 wolumen pod Linuksem.
 
-Kompatybilno¶æ osi±gniêto metod± Wine poprzez u¿ycie oryginalnego
-sterownika ntfs.sys. Captive emuluje wymagane podsystemy j±dra
+KompatybilnoÅ›Ä‡ osiÄ…gniÄ™to metodÄ… Wine poprzez uÅ¼ycie oryginalnego
+sterownika ntfs.sys. Captive emuluje wymagane podsystemy jÄ…dra
 Microsoft Windows poprzez wykorzystanie oryginalnego ntoskrnl.exe,
-czê¶ci ReactOS-a lub w³asne implementacje z tego projektu w zale¿no¶ci
-od danego przypadku. Projekt zawiera pierwsze API j±dra MS-Windows z
-otwartymi ¼ród³ami dla wolnodostêpnych systemów operacyjnych. Wybrano
-wykorzystanie plików oryginalnego sterownika aby osi±gn±æ lepsz±
-kompatybilno¶æ i bezpieczeñstwo.
+czÄ™Å›ci ReactOS-a lub wÅ‚asne implementacje z tego projektu w zaleÅ¼noÅ›ci
+od danego przypadku. Projekt zawiera pierwsze API jÄ…dra MS-Windows z
+otwartymi ÅºrÃ³dÅ‚ami dla wolnodostÄ™pnych systemÃ³w operacyjnych. Wybrano
+wykorzystanie plikÃ³w oryginalnego sterownika aby osiÄ…gnÄ…Ä‡ lepszÄ…
+kompatybilnoÅ›Ä‡ i bezpieczeÅ„stwo.
 
 %package -n gnome-vfs2-module-captive
 Summary:	Captive module for gnome-vfs
-Summary(pl):	Modu³ captive dla gnome-vfs
+Summary(pl.UTF-8):   ModuÅ‚ captive dla gnome-vfs
 Group:		Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description -n gnome-vfs2-module-captive
 Captive module for gnome-vfs.
 
-%description -n gnome-vfs2-module-captive -l pl
-Modu³ captive dla gnome-vfs.
+%description -n gnome-vfs2-module-captive -l pl.UTF-8
+ModuÅ‚ captive dla gnome-vfs.
 
 %package install
 Summary:	Windows filesystem drivers installer for captive
-Summary(pl):	Instalator windowsowych sterowników systemu plików dla captive
+Summary(pl.UTF-8):   Instalator windowsowych sterownikÃ³w systemu plikÃ³w dla captive
 Group:		Base/Utilities
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	ntfsprogs
@@ -96,30 +96,30 @@ Requires:	ntfsprogs
 %description install
 Windows filesystem drivers installer for captive.
 
-%description install -l pl
-Instalator windowsowych sterowników systemu plików dla captive.
+%description install -l pl.UTF-8
+Instalator windowsowych sterownikÃ³w systemu plikÃ³w dla captive.
 
 %package devel
 Summary:	Captive - NTFS read/write filesystem for Linux
-Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
+Summary(pl.UTF-8):   Captive - obsÅ‚uga NTFS dla Linuksa z odczytem i zapisem
 Group:		Base/Utilities
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 This package contains header files and development libraries for captive.
 
-%description devel -l pl
-Pakiet zawiera pliki nag³ówkowe i biblioteki deweloperskie dla captive.
+%description devel -l pl.UTF-8
+Pakiet zawiera pliki nagÅ‚Ã³wkowe i biblioteki deweloperskie dla captive.
 
 %package libs
 Summary:	Captive - NTFS read/write filesystem for Linux
-Summary(pl):	Captive - obs³uga NTFS dla Linuksa z odczytem i zapisem
+Summary(pl.UTF-8):   Captive - obsÅ‚uga NTFS dla Linuksa z odczytem i zapisem
 Group:		Base/Utilities
 
 %description libs
 This package contains shared libraries for captive.
 
-%description libs -l pl
+%description libs -l pl.UTF-8
 Pakiet zawiera biblioteki dzielone dla captive.
 
 %prep
