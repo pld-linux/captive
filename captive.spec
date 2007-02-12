@@ -4,7 +4,7 @@
 # please allow those bconds to remain here as next version might be gnome-vfs2 independent
 # %bcond_without	vfs	# enable gnome2 cvs
 Summary:	Captive - NTFS read/write filesystem for Linux
-Summary(pl):	Captive - obs≥uga NTFS dla Linuksa z odczytem i zapisem
+Summary(pl.UTF-8):   Captive - obs≈Çuga NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.7
 Release:	1
@@ -55,36 +55,36 @@ MS-Windows kernel API for Free operating systems. Involvement of the
 original driver files was chosen to achieve the best and unprecedented
 filesystem compatibility and safety.
 
-%description -l pl
-Projekt Captive implementuje pierwszy pe≥ny, swobodny dostÍp z
-odczytem i zapisem do partycji NTFS. Pozwala zamontowaÊ partycje z
-Microsoft Windows NT, 200x i XP jako dostÍpny w sposÛb przezroczysty
+%description -l pl.UTF-8
+Projekt Captive implementuje pierwszy pe≈Çny, swobodny dostƒôp z
+odczytem i zapisem do partycji NTFS. Pozwala zamontowaƒá partycje z
+Microsoft Windows NT, 200x i XP jako dostƒôpny w spos√≥b przezroczysty
 wolumen pod Linuksem.
 
-Kompatybilno∂Ê osi±gniÍto metod± Wine poprzez uøycie oryginalnego
-sterownika ntfs.sys. Captive emuluje wymagane podsystemy j±dra
+Kompatybilno≈õƒá osiƒÖgniƒôto metodƒÖ Wine poprzez u≈ºycie oryginalnego
+sterownika ntfs.sys. Captive emuluje wymagane podsystemy jƒÖdra
 Microsoft Windows poprzez wykorzystanie oryginalnego ntoskrnl.exe,
-czÍ∂ci ReactOS-a lub w≥asne implementacje z tego projektu w zaleøno∂ci
-od danego przypadku. Projekt zawiera pierwsze API j±dra MS-Windows z
-otwartymi ºrÛd≥ami dla wolnodostÍpnych systemÛw operacyjnych. Wybrano
-wykorzystanie plikÛw oryginalnego sterownika aby osi±gn±Ê lepsz±
-kompatybilno∂Ê i bezpieczeÒstwo.
+czƒô≈õci ReactOS-a lub w≈Çasne implementacje z tego projektu w zale≈ºno≈õci
+od danego przypadku. Projekt zawiera pierwsze API jƒÖdra MS-Windows z
+otwartymi ≈∫r√≥d≈Çami dla wolnodostƒôpnych system√≥w operacyjnych. Wybrano
+wykorzystanie plik√≥w oryginalnego sterownika aby osiƒÖgnƒÖƒá lepszƒÖ
+kompatybilno≈õƒá i bezpiecze≈Ñstwo.
 
 %package devel
 Summary:	Header files for captive library
-Summary(pl):	Pliki nag≥Ûwkowe biblioteki captive
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe biblioteki captive
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 This is the package containing the header files for captive.
 
-%description devel -l pl
-Ten pakiet zawiera pliki nag≥Ûwkowe biblioteki captive.
+%description devel -l pl.UTF-8
+Ten pakiet zawiera pliki nag≈Ç√≥wkowe biblioteki captive.
 
 %package gnome
 Summary:	Gnome VFS module for captive support
-Summary(pl):	Modu≥ Gnome VFS z obs≥ug± captive
+Summary(pl.UTF-8):   Modu≈Ç Gnome VFS z obs≈ÇugƒÖ captive
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gnome-vfs2 >= 2.0
@@ -92,8 +92,8 @@ Requires:	gnome-vfs2 >= 2.0
 %description gnome
 Gnome VFS module for captive support.
 
-%description gnome -l pl
-Modu≥ Gnome VFS z obs≥ug± captive.
+%description gnome -l pl.UTF-8
+Modu≈Ç Gnome VFS z obs≈ÇugƒÖ captive.
 
 %prep
 %setup -q
