@@ -4,7 +4,7 @@
 # please allow those bconds to remain here as next version might be gnome-vfs2 independent
 # %bcond_without	vfs	# enable gnome2 cvs
 Summary:	Captive - NTFS read/write filesystem for Linux
-Summary(pl.UTF-8):   Captive - obsługa NTFS dla Linuksa z odczytem i zapisem
+Summary(pl.UTF-8):	Captive - obsługa NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
 Version:	1.1.7
 Release:	1
@@ -72,7 +72,7 @@ kompatybilność i bezpieczeństwo.
 
 %package devel
 Summary:	Header files for captive library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki captive
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki captive
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -84,7 +84,7 @@ Ten pakiet zawiera pliki nagłówkowe biblioteki captive.
 
 %package gnome
 Summary:	Gnome VFS module for captive support
-Summary(pl.UTF-8):   Moduł Gnome VFS z obsługą captive
+Summary(pl.UTF-8):	Moduł Gnome VFS z obsługą captive
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gnome-vfs2 >= 2.0
