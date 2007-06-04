@@ -2,7 +2,7 @@
 # nice article about how to use it in gentoo, should be easy to prot to pld
 
 # please allow those bconds to remain here as next version might be gnome-vfs2 independent
-# %bcond_without	vfs	# enable gnome2 cvs
+# %bcond_without	vfs	# disable gnome2 vfs
 Summary:	Captive - NTFS read/write filesystem for Linux
 Summary(pl.UTF-8):	Captive - obsługa NTFS dla Linuksa z odczytem i zapisem
 Name:		captive
