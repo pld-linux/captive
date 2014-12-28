@@ -19,7 +19,7 @@ BuildRequires:	gnome-vfs2-devel >= 2.0
 #%endif
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	libfuse-devel >= 2.4.1
 BuildRequires:	libtool
 BuildRequires:	libxml2-devel >= 2.5.9
