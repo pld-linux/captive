@@ -97,7 +97,7 @@ Moduł Gnome VFS z obsługą captive.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 # Fix not finished moving captive-sandbox-server to libdir
 sed -i -e 's/--sandbox-server=@sbindir@/--sandbox-server=@libdir@/g' src/client/gnomevfs/captive.conf.in
